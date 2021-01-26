@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "xtools.node": "0.0.9"
+    "xtools.node": "0.0.10"
   }
 }

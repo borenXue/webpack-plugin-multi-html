@@ -11,26 +11,31 @@ class MultiHtmlPlugiEntryDependency extends EntryDependency {
   }
 }
 
+export type WebpackMultiHtmlPluginOptions = { HtmlPlugin?: any } & MultiHtmlOptionsV2;
+
 /**
  * webpack 多页面打包
  */
 module.exports = class WebpackMultiHtmlPlugin {
 
-  constructor(options: MultiHtmlOptionsV2) {
-    (this as any).options = options || {};
+  options: WebpackMultiHtmlPluginOptions;
+
+  constructor(options: WebpackMultiHtmlPluginOptions) {
+    this.options = options || {} as WebpackMultiHtmlPluginOptions;
   }
 
   getEntriesAndOptions(context: string) {
-    const [entries, options] = webpackMultiHtmlV2({
-      context,
-      entries: [
-        { globPattern: 'src/**/*.js', entryRemovedPrefix: 'src/' },
-        { globPattern: 'src/**/*.ts', entryRemovedPrefix: 'src/', globIgnore: '**/*.d.ts' },
-      ],
-      baseTemplate: 'public/index.html',
-      debug: true,
-      htmlExtra: {}
-    });
+    const [entries, options] = webpackMultiHtmlV2(this.options);
+    // {
+    //   context,
+    //   entries: [
+    //     { globPattern: 'src/**/*.js', entryRemovedPrefix: 'src/' },
+    //     { globPattern: 'src/**/*.ts', entryRemovedPrefix: 'src/', globIgnore: '**/*.d.ts' },
+    //   ],
+    //   baseTemplate: 'public/index.html',
+    //   debug: true,
+    //   htmlExtra: {}
+    // }
     return [entries, options];
   }
 
